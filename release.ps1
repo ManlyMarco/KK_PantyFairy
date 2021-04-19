@@ -7,7 +7,7 @@ else {
 }
 
 $copy = $dir + "\copy\BepInEx\plugins" 
-$plugins = $dir + "\BepInEx\plugins"
+$plugins = $dir
 
 # Create releases ---------
 function CreateZip ($pluginFile)
@@ -23,7 +23,7 @@ function CreateZip ($pluginFile)
     Compress-Archive -Path ($copy + "\..\") -Force -CompressionLevel "Optimal" -DestinationPath ($dir + $pluginFile.BaseName + "_" + "v" + $ver + ".zip")
 }
 
-foreach ($pluginFile in Get-ChildItem -Path $plugins) 
+foreach ($pluginFile in Get-ChildItem -Path $plugins -Filter *.dll) 
 {
     try
     {
