@@ -113,22 +113,15 @@ namespace KK_PantyFairy.Functions
         private static void SetClothesStateHook(ChaControl __instance, int clothesKind, ref byte state)
         {
             var kind = (ChaFileDefine.ClothesKind)clothesKind;
-            switch (kind)
+            if (kind == ChaFileDefine.ClothesKind.shorts)
             {
-                case ChaFileDefine.ClothesKind.shorts:
-                    {
-                        if (Enabled && IsDepantified(__instance))
-                            state = 3;
-                        break;
-                    }
-                case ChaFileDefine.ClothesKind.bot:
-                case ChaFileDefine.ClothesKind.top:
-                case ChaFileDefine.ClothesKind.bra:
-                    {
-                        if (ClothesEnabled && IsDeclothified(__instance))
-                            state = 3;
-                        break;
-                    }
+                if (Enabled && IsDepantified(__instance))
+                    state = 3;
+            }
+            else
+            {
+                if (ClothesEnabled && IsDeclothified(__instance))
+                    state = 3;
             }
         }
 
@@ -238,9 +231,9 @@ namespace KK_PantyFairy.Functions
             {
                 // Succeeded at getting them
                 Declothify(chaCtrl);
-                chaCtrl.SetClothesState(0, 3);
-                chaCtrl.SetClothesState(1, 3);
-                chaCtrl.SetClothesState(2, 3);
+                chaCtrl.SetClothesStateAll(0);
+                // Apply to the overworld npc as well
+                PantyFairyPlugin.Instance.StartCoroutine(new WaitUntil(() => targetGirl.chaCtrl != chaCtrl).AppendCo(() => targetGirl.chaCtrl.SetClothesStateAll(0)));
 
                 var noticed = Random.value > 0.3f;
                 if (noticed)
@@ -389,6 +382,8 @@ namespace KK_PantyFairy.Functions
                 // Succeeded at getting them
                 Depantify(chaCtrl);
                 chaCtrl.SetClothesState(pantsPartIndex, 3);
+                // Apply to the overworld npc as well
+                PantyFairyPlugin.Instance.StartCoroutine(new WaitUntil(() => targetGirl.chaCtrl != chaCtrl).AppendCo(() => targetGirl.chaCtrl.SetClothesState(pantsPartIndex, 3)));
 
                 var noticed = Random.value > 0.7f;
                 if (noticed)

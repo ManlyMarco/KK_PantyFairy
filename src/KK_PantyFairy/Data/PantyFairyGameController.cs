@@ -23,5 +23,10 @@ namespace KK_PantyFairy.Data
         {
             PantyStealFeat.ClearDepantified();
         }
+
+        protected override void OnNewGame()
+        {
+            CustomEvents.SaveData = new PantyFairySaveData();
+        }
     }
 }

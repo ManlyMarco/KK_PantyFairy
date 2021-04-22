@@ -125,7 +125,7 @@ namespace KK_PantyFairy.Events
             list.Add(Program.Transfer.Text(EventUtils.PlayerName, "Hmm?"));
             list.Add(Program.Transfer.Text(EventUtils.Narrator, "A folded piece of paper is laying on the floor with shoe marks all over it. Looks like something is written on it."));
             list.Add(Program.Transfer.Create(false, Command.FontColor, "Color2", UnknownName));
-            list.Add(Program.Transfer.Text(UnknownName, "\"There's a ghost in the men's bathroom, I swear!\nI snuck in there yesterday and heard strange noises and groans!\""));
+            list.Add(Program.Transfer.Text(UnknownName, "\"There's a ghost in the men's bathroom, I swear! I snuck in there yesterday and heard strange noises and groans!\""));
             list.Add(Program.Transfer.Text(UnknownName, "\"I asked others to check, but they said there was nothing there... and that I'm delusional from being too horny!"));
             list.Add(Program.Transfer.Text(UnknownName, "\"I swear it's real! And I'm not horny, that's slander! I'm just unusually sensual!\""));
             list.Add(Program.Transfer.Text(UnknownName, "\"Can you go and see? It should be around the furthest stall.  I'm too afraid to go there by myself now. What if I got pinned to the ground and ravaged?\""));
@@ -543,7 +543,7 @@ namespace KK_PantyFairy.Events
                 list.Add(Program.Transfer.Text(EventUtils.PlayerName, "Ugh. Will this ever end, or am I your lifetime dealer now?"));
                 list.Add(Program.Transfer.Text(FairyName, "Don't be so impatient, just enjoy the panties. I know, I'll give you a reward!"));
                 list.Add(Program.Transfer.Text(EventUtils.PlayerName, "What kind of a reward?"));
-                list.Add(Program.Transfer.Text(FairyName, "A power of prerverted wind! You can blow someone's skirt upwards and peep all you want. Bonus points if you steal the panties first, hehehe."));
+                list.Add(Program.Transfer.Text(FairyName, "A power of perverted wind! You can blow someone's skirt upwards and peep all you want. Bonus points if you steal the panties first, hehehe."));
                 list.Add(Program.Transfer.Text(EventUtils.PlayerName, "That sounds... interesting. How do I use it?"));
                 list.Add(Program.Transfer.Text(FairyName, "Just imagine wind blowing upwards, it's not that hard. You might need to train your imagination a bit though."));
                 list.Add(Program.Transfer.Text(EventUtils.PlayerName, "Power of perversion, got it. Still, how did you know I would like this?"));
@@ -653,7 +653,7 @@ namespace KK_PantyFairy.Events
                 list.Add(Program.Transfer.Text(UnknownName,
                     $"Yeah, I'm finally back to being a human! You look different in person, {EventUtils.PlayerName}."));
 
-                list.Add(Program.Transfer.Text(EventUtils.PlayerName, "Umm, I'm complaining, but why are you naked?"));
+                list.Add(Program.Transfer.Text(EventUtils.PlayerName, "Umm, I'm not complaining, but why are you naked?"));
 
                 list.Add(Program.Transfer.Create(true, Command.CharaExpression, "0", "0", "2", "8", "", "0.8", "", "", "0.4", "", "", ""));
                 list.Add(Program.Transfer.Voice("0", "sound/data/pcm/c22/adm/00.unity3d", "adm_02_22_005"));
