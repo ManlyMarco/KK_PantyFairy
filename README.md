@@ -10,6 +10,10 @@ This plugin is inspired by the KK_PantyRobber plugin by picolet21. He laid the g
 4. Extract the release to your game directory. The dll file should end up inside BepInEx\plugins folder in your game's directory.
 5. Start main game, either by loading an old save or starting a new game. You should see a new action icon at 1F Corridor near the Infarmary door.
 
+## Screenshots
+
+![preview](https://user-images.githubusercontent.com/39247311/115811520-239e7d80-a3f0-11eb-9427-96cc5c132fd5.png)
+
 ## Cheats / walkthrough / spoilers
 - There are some cheats you can turn on in Plugin Settings by searching for "pantyfairy" (press F1).
 
