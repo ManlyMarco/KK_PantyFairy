@@ -38,7 +38,7 @@ namespace KK_PantyFairy
             Logger = base.Logger;
 
             _relaxedStatChecks = Config.Bind("Cheats", "Skip H stat checks", false,
-                new ConfigDescription("Allow using all skills without leveling up the H stat.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
+                new ConfigDescription("Allow using all skills and progressing through the side story without leveling up the H stat.", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
             
             _alwaysUnlockPowers = Config.Bind("Cheats", "Always unlock all powers", false,
                 new ConfigDescription("Allow using all skills without progressing the side story. WARNING: Might mess up the side story progression!", null, new ConfigurationManagerAttributes { IsAdvanced = true }));
