@@ -13,16 +13,10 @@ using UnityEngine;
 
 namespace KK_PantyFairy
 {
-    [BepInPlugin(GUID, PluginName, Version)]
-    [BepInDependency(KoikatuAPI.GUID, KoikatuAPI.VersionConst)]
     [BepInProcess("Koikatu")]
     [BepInProcess("Koikatsu Party")]
-    public class PantyFairyPlugin : BaseUnityPlugin
+    public partial class PantyFairyPlugin : BaseUnityPlugin
     {
-        public const string GUID = "PantyFairy";
-        public const string PluginName = "PantyFairy";
-        public const string Version = "1.0";
-
         internal static PantyFairyPlugin Instance;
         public static new ManualLogSource Logger { get; set; }
 

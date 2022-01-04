@@ -256,13 +256,13 @@ namespace KK_PantyFairy.Functions
                 CustomEvents.SaveData.UniformsStolenTotal++;
 
                 list.Add(Program.Transfer.Close());
-                var evt = EventApi.StartTextSceneEvent(talkScene, list, decreaseTalkTime: true);
-                if (noticed) evt = evt.AppendCo(() =>
-                {
-                    targetGirl.lewdness = Mathf.Min(100, targetGirl.lewdness + 50);
-                    Manager.Game.Player.koikatsuPoint += 10;
-                });
-                return evt;
+                return EventApi.StartTextSceneEvent(talkScene, list, decreaseTalkTime: true)
+                    .AppendCo(() =>
+                    {
+                        if (noticed)
+                            targetGirl.lewdness = Mathf.Min(100, targetGirl.lewdness + 30);
+                        Manager.Game.Player.koikatsuPoint += 10;
+                    });
             }
         }
 
@@ -289,12 +289,7 @@ namespace KK_PantyFairy.Functions
             {
                 list.Add(Program.Transfer.Text(EventApi.Narrator, "I reach out with my hand and whisper \"Steal!\""));
                 list.Add(Program.Transfer.Text(EventApi.Narrator, "..."));
-                list.Add(Program.Transfer.Text(EventApi.HeroineName, "Is something wrong?"));
-                if (Random.value > 0.5f)
-                    list.Add(Program.Transfer.Text(EventApi.PlayerName, "Just practicing my Jojo poses, how fabulous do I look?"));
-                else
-                    list.Add(Program.Transfer.Text(EventApi.PlayerName, "Ah? No, nothing, my hand just cramped!"));
-                list.Add(Program.Transfer.Text(EventApi.HeroineName, "Hmm..."));
+                MakeExcuse(list);
                 list.Add(Program.Transfer.Text(EventApi.Narrator, "I feel like something is holding me back. Could it be I'm not perverted enough?"));
                 list.Add(Program.Transfer.Text(EventApi.Narrator, "(You need to have earned at least 200 Koikatsu points in total to use this skill)"));
                 list.Add(Program.Transfer.Close());
@@ -340,10 +335,7 @@ namespace KK_PantyFairy.Functions
                 list.Add(Program.Transfer.Text(EventApi.Narrator, "The spell went off, but nothing happened. Could it be that she's not wearing any panties?"));
                 if (Random.value > 0.8f)
                 {
-                    list.Add(Program.Transfer.Text(EventApi.HeroineName, "Is something wrong?"));
-                    list.Add(Program.Transfer.Text(EventApi.PlayerName, "Ah? No, nothing, my hand just cramped!"));
-                    list.Add(Program.Transfer.Text(EventApi.HeroineName, "Really? Are you okay?"));
-                    list.Add(Program.Transfer.Text(EventApi.PlayerName, "Yeah, don't worry about it!"));
+                    MakeExcuse(list);
                 }
                 list.Add(Program.Transfer.Close());
                 return EventApi.StartTextSceneEvent(talkScene, list, true);
@@ -376,10 +368,7 @@ namespace KK_PantyFairy.Functions
                 //    }
                 //    else
                 {
-                    list.Add(Program.Transfer.Text(EventApi.HeroineName, "Is something wrong?"));
-                    list.Add(Program.Transfer.Text(EventApi.PlayerName, "Ah? No, nothing, just practicing my Jojo poses!"));
-                    list.Add(Program.Transfer.Text(EventApi.HeroineName, "Ehh? Are all boys like that?"));
-                    list.Add(Program.Transfer.Text(EventApi.PlayerName, "Um, probably! Please don't mind me."));
+                    MakeExcuse(list);
                     list.Add(Program.Transfer.Close());
                     return EventApi.StartTextSceneEvent(talkScene, list, true, false);
                 }
@@ -416,13 +405,54 @@ namespace KK_PantyFairy.Functions
                     list.Add(Program.Transfer.Text(EventApi.Narrator, $"(I've got {CustomEvents.SaveData.PantiesStolenHeld} pairs now)"));
 
                 list.Add(Program.Transfer.Close());
-                var evt = EventApi.StartTextSceneEvent(talkScene, list, decreaseTalkTime: true);
-                if (noticed) evt = evt.AppendCo(() =>
-                {
-                    targetGirl.lewdness = Mathf.Min(100, targetGirl.lewdness + 30);
-                    Manager.Game.Player.koikatsuPoint += 5;
-                });
-                return evt;
+                return EventApi.StartTextSceneEvent(talkScene, list, decreaseTalkTime: true)
+                    .AppendCo(() =>
+                    {
+                        if (noticed)
+                            targetGirl.lewdness = Mathf.Min(100, targetGirl.lewdness + 17);
+                        Manager.Game.Player.koikatsuPoint += 5;
+                    });
+            }
+        }
+
+        private static void MakeExcuse(List<Program.Transfer> list)
+        {
+            switch (Random.Range(0, 5))
+            {
+                default:
+                case 0:
+                    list.Add(Program.Transfer.Text(EventApi.HeroineName, "Is something wrong?"));
+                    list.Add(Program.Transfer.Text(EventApi.PlayerName, "Ah? No, nothing, my hand just cramped!"));
+                    list.Add(Program.Transfer.Text(EventApi.HeroineName, "Really? Are you okay?"));
+                    list.Add(Program.Transfer.Text(EventApi.PlayerName, "Yeah, don't worry about it!"));
+                    break;
+                case 1:
+                    list.Add(Program.Transfer.Text(EventApi.HeroineName, "Is something wrong?"));
+                    list.Add(Program.Transfer.Text(EventApi.PlayerName, "Oh? I am simply practicing my Jojo poses!"));
+                    list.Add(Program.Transfer.Text(EventApi.HeroineName, "Ehh? Are all boys like that?"));
+                    list.Add(Program.Transfer.Text(EventApi.PlayerName, "Um, probably! Please don't mind me."));
+                    break;
+                case 2:
+                    list.Add(Program.Transfer.Text(EventApi.HeroineName, "What are you doing?"));
+                    list.Add(Program.Transfer.Text(EventApi.PlayerName, "I thought it would look cool if I did this."));
+                    list.Add(Program.Transfer.Text(EventApi.HeroineName, "Cool?! Uhh... How do I say this..."));
+                    list.Add(Program.Transfer.Text(EventApi.Narrator, "I strike another pose, this time with other hand."));
+                    list.Add(Program.Transfer.Text(EventApi.HeroineName, "Alright, I get it! It's cool, so please stop doing it! People are looking this way!"));
+                    break;
+                case 3:
+                    list.Add(Program.Transfer.Text(EventApi.HeroineName, "What are you doing?"));
+                    list.Add(Program.Transfer.Text(EventApi.PlayerName, "Just practicing my dance moves, how fabulous do I look?"));
+                    list.Add(Program.Transfer.Text(EventApi.HeroineName, "Hmm... Alright I guess?"));
+                    list.Add(Program.Transfer.Text(EventApi.PlayerName, "Good enough for me!"));
+                    break;
+                case 4:
+                    list.Add(Program.Transfer.Text(EventApi.HeroineName, "*Stare*"));
+                    list.Add(Program.Transfer.Text(EventApi.PlayerName, "Umm..."));
+                    list.Add(Program.Transfer.Text(EventApi.HeroineName, "*Stare*"));
+                    list.Add(Program.Transfer.Text(EventApi.PlayerName, "I'm sorry?"));
+                    list.Add(Program.Transfer.Text(EventApi.HeroineName, "Eh? Why are you apologizing? I should be apologizing, I got lost in thought."));
+                    list.Add(Program.Transfer.Text(EventApi.Narrator, "She wasn't paying attention? Lucky!"));
+                    break;
             }
         }
 

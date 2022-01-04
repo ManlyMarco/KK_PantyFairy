@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ADV;
 using KK_PantyFairy.Data;
+using KK_PantyFairy.Events;
 using KK_PantyFairy.Functions;
 using KKAPI.MainGame;
 using KKAPI.Utilities;
@@ -11,14 +12,15 @@ using UniRx;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace KK_PantyFairy.Events
+namespace KK_PantyFairy
 {
     public static class CustomEvents
     {
         public static readonly List<CustomEventData> EventData;
 
-        private static readonly Vector3 _mainEventActionIconPosition = new Vector3(-15.5f, 0.0f, -36.2f);
-        private static readonly Vector3 _mainEventPosition = new Vector3(-15.5f, 0.0f, -36.2f);
+        private static readonly Vector3 _mainEventActionIconPosition = new Vector3(-15.3f, 0.0f, -36.2f);
+        private static readonly Vector3 _mainEventPosition = new Vector3(-15.3f, 0.0f, -37.2f);
+        private static readonly Quaternion _mainEventRotation = Quaternion.Euler(0, 347, 0);
         private static readonly int _mainEventMapNo = 32; // clothing store
 
         private const string UnknownName = "？？？";
@@ -78,7 +80,7 @@ namespace KK_PantyFairy.Events
             GustOfWindFeat.Enabled = WindEnabled;
         }
 
-        private static IDisposable MakeActIcon(Action<IDisposable> startEvent, string iconName, int mapNo, Vector3 position, Color color)
+        private static IDisposable MakeActIcon(Action<IDisposable> startEvent, string iconName, int mapNo, Vector3 position, Color color, string actionText)
         {
             // Todo add a proper event icon
             if (iconName == "action_event") iconName = "action_point";
@@ -86,7 +88,7 @@ namespace KK_PantyFairy.Events
             IDisposable icon = null;
             icon = GameAPI.AddActionIcon(mapNo, position,
                 PantyFairyPlugin.GetTexture(iconName + ".png"), color,
-                "Start event",
+                actionText,
                 () => startEvent(icon),
                 delayed: true, immediate: true);
             return icon;
@@ -100,31 +102,33 @@ namespace KK_PantyFairy.Events
             // 17 - hotel changing room 
             // 33 - beach changing room 
 
-            EventData.Add(new CustomEventData(StoryProgress.E1_Initial, () => MakeActIcon(StartE1, "action_question", 2, new Vector3(29.2f, 0.0f, -114.2f), Color.white))); // near garbage bags
+            EventData.Add(new CustomEventData(StoryProgress.E1_Initial, () => MakeActIcon(StartE1, "action_question", 2, new Vector3(29.2f, 0.0f, -114.2f), Color.white, "Pick up"))); // near garbage bags
 
             var eventColor = new Color(255 / 255f, 160 / 255f, 175 / 255f);
 
-            EventData.Add(new CustomEventData(StoryProgress.E2_Meeting, () => MakeActIcon(StartE2, "action_question", _mainEventMapNo, _mainEventActionIconPosition, eventColor)));
+            EventData.Add(new CustomEventData(StoryProgress.E2_Meeting, () => MakeActIcon(StartE2, "action_question", _mainEventMapNo, _mainEventActionIconPosition, eventColor, "Look around")));
 
+            const string summonTheFairy = "Summon Panty Fairy";
+            const string lookForPanties = "Look for treasure";
             EventData.Add(new CustomEventData(StoryProgress.E3_FirstRaid, () => new CompositeDisposable(
-                MakeActIcon(StartE3, "action_event", _mainEventMapNo, _mainEventActionIconPosition, eventColor),
-                MakeActIcon(StartE3_2, "action_point", 17, new Vector3(-92.62f, 0.00f, -93.78f), Color.white),
-                MakeActIcon(StartE3_2, "action_point", 17, new Vector3(-93.19f, 0.00f, -91.89f), Color.white),
-                MakeActIcon(StartE3_2, "action_point", 17, new Vector3(-93.26f, 0.00f, -90.28f), Color.white),
-                MakeActIcon(StartE3_2, "action_point", 17, new Vector3(-94.00f, 0.00f, -88.41f), Color.white),
-                MakeActIcon(StartE3_2, "action_point", 33, new Vector3(-120.92f, 0.00f, -53.55f), Color.white),
-                MakeActIcon(StartE3_2, "action_point", 33, new Vector3(-122.83f, 0.00f, -53.55f), Color.white),
-                MakeActIcon(StartE3_2, "action_point", 33, new Vector3(-123.48f, 0.00f, -56.33f), Color.white),
-                MakeActIcon(StartE3_2, "action_point", 33, new Vector3(-120.34f, 0.00f, -56.33f), Color.white)
-                )));
+                MakeActIcon(StartE3, "action_event", _mainEventMapNo, _mainEventActionIconPosition, eventColor, summonTheFairy),
+                MakeActIcon(StartE3_2, "action_point", 17, new Vector3(-92.62f, 0.00f, -93.78f), Color.white, lookForPanties),
+                MakeActIcon(StartE3_2, "action_point", 17, new Vector3(-93.19f, 0.00f, -91.89f), Color.white, lookForPanties),
+                MakeActIcon(StartE3_2, "action_point", 17, new Vector3(-93.26f, 0.00f, -90.28f), Color.white, lookForPanties),
+                MakeActIcon(StartE3_2, "action_point", 17, new Vector3(-94.00f, 0.00f, -88.41f), Color.white, lookForPanties),
+                MakeActIcon(StartE3_2, "action_point", 33, new Vector3(-120.92f, 0.00f, -53.55f), Color.white, lookForPanties),
+                MakeActIcon(StartE3_2, "action_point", 33, new Vector3(-122.83f, 0.00f, -53.55f), Color.white, lookForPanties),
+                MakeActIcon(StartE3_2, "action_point", 33, new Vector3(-123.48f, 0.00f, -56.33f), Color.white, lookForPanties),
+                MakeActIcon(StartE3_2, "action_point", 33, new Vector3(-120.34f, 0.00f, -56.33f), Color.white, lookForPanties)
+            )));
 
-            EventData.Add(new CustomEventData(StoryProgress.E4_SecondRaid, () => MakeActIcon(StartE4, "action_event", _mainEventMapNo, _mainEventActionIconPosition, eventColor)));
+            EventData.Add(new CustomEventData(StoryProgress.E4_SecondRaid, () => MakeActIcon(StartE4, "action_event", _mainEventMapNo, _mainEventActionIconPosition, eventColor, summonTheFairy)));
 
-            EventData.Add(new CustomEventData(StoryProgress.E5_Steal, () => MakeActIcon(StartE5, "action_event", _mainEventMapNo, _mainEventActionIconPosition, eventColor)));
+            EventData.Add(new CustomEventData(StoryProgress.E5_Steal, () => MakeActIcon(StartE5, "action_event", _mainEventMapNo, _mainEventActionIconPosition, eventColor, summonTheFairy)));
 
-            EventData.Add(new CustomEventData(StoryProgress.E6_GustOfWind, () => MakeActIcon(StartE6, "action_event", _mainEventMapNo, _mainEventActionIconPosition, eventColor)));
+            EventData.Add(new CustomEventData(StoryProgress.E6_GustOfWind, () => MakeActIcon(StartE6, "action_event", _mainEventMapNo, _mainEventActionIconPosition, eventColor, summonTheFairy)));
 
-            EventData.Add(new CustomEventData(StoryProgress.E7_Uniform, () => MakeActIcon(StartE7, "action_event", _mainEventMapNo, _mainEventActionIconPosition, eventColor)));
+            EventData.Add(new CustomEventData(StoryProgress.E7_Uniform, () => MakeActIcon(StartE7, "action_event", _mainEventMapNo, _mainEventActionIconPosition, eventColor, summonTheFairy)));
         }
 
         public static void StartE1(IDisposable icon)
@@ -224,7 +228,7 @@ namespace KK_PantyFairy.Events
             list.Add(Program.Transfer.Close());
 
             PantyFairyPlugin.Instance.StartCoroutine(
-                EventApi.StartAdvEvent(list, _mainEventPosition, Quaternion.identity, extraData: new Program.OpenDataProc
+                EventApi.StartAdvEvent(list, _mainEventPosition, _mainEventRotation, extraData: new Program.OpenDataProc
                 {
                     onLoad = () =>
                     {
@@ -292,7 +296,7 @@ namespace KK_PantyFairy.Events
             list.Add(Program.Transfer.Close());
 
             PantyFairyPlugin.Instance.StartCoroutine(
-                EventApi.StartAdvEvent(list, _mainEventPosition, Quaternion.identity, extraData: new Program.OpenDataProc
+                EventApi.StartAdvEvent(list, _mainEventPosition, _mainEventRotation, extraData: new Program.OpenDataProc
                 {
                     onLoad = () =>
                     {
@@ -442,7 +446,7 @@ namespace KK_PantyFairy.Events
             list.Add(Program.Transfer.Close());
 
             PantyFairyPlugin.Instance.StartCoroutine(
-                EventApi.StartAdvEvent(list, _mainEventPosition, Quaternion.identity, extraData: new Program.OpenDataProc
+                EventApi.StartAdvEvent(list, _mainEventPosition, _mainEventRotation, extraData: new Program.OpenDataProc
                 {
                     onLoad = () =>
                     {
@@ -555,7 +559,7 @@ namespace KK_PantyFairy.Events
                 list.Add(Program.Transfer.Text(FairyName, "Just imagine wind blowing upwards, it's not that hard. You might need to train your imagination a bit though."));
                 list.Add(Program.Transfer.Text(EventApi.PlayerName, "Power of perversion, got it. Still, how did you know I would like this?"));
                 list.Add(Program.Transfer.Text(FairyName, "I just felt like I should give you something like this. Glad to hear you like it."));
-                list.Add(Program.Transfer.Text(EventApi.Narrator, "Why does this feel like talking with a close guy friend? I really missed this since transferring here."));
+                list.Add(Program.Transfer.Text(EventApi.Narrator, "Why does this feel like talking with a close guy friend? I really missed this since transferring to this all-girls school."));
                 list.Add(Program.Transfer.Text(EventApi.PlayerName, "You know, if you weren't a guy I'd probably want to date you."));
                 list.Add(Program.Transfer.Text(FairyName, "Like I said, I'm not a guy! I'll friendzone you just as if I was a guy though."));
                 list.Add(Program.Transfer.Text(EventApi.PlayerName, "That's harsh, at least give me a chance."));
@@ -574,7 +578,7 @@ namespace KK_PantyFairy.Events
             list.Add(Program.Transfer.Close());
 
             PantyFairyPlugin.Instance.StartCoroutine(
-                EventApi.StartAdvEvent(list, _mainEventPosition, Quaternion.identity, extraData: new Program.OpenDataProc
+                EventApi.StartAdvEvent(list, _mainEventPosition, _mainEventRotation, extraData: new Program.OpenDataProc
                 {
                     onLoad = () =>
                     {
@@ -721,10 +725,10 @@ namespace KK_PantyFairy.Events
                 list.Add(Program.Transfer.Text(EventApi.PlayerName, "Can't you wear one of the panties I brought you at least?"));
                 list.Add(Program.Transfer.Text(EventApi.HeroineName, "I don't have them anymore, I converted them all into energy. But good thinking, I could use someone's clothes instead."));
                 list.Add(Program.Transfer.Text(EventApi.PlayerName, "Wait, you want someone else's clothes? We're in a clothing store, I can buy you something if you don't have any money."));
-                list.Add(Program.Transfer.Text(EventApi.HeroineName, "The clothes here are no good, there's no energy in them so they won't work well with my body."));
+                list.Add(Program.Transfer.Text(EventApi.HeroineName, "I tried clothes from the store a second ago! And you've seen the result! I have a hunch that I need clothes with some energy in them."));
                 list.Add(Program.Transfer.Text(EventApi.PlayerName, "Alright... So what do I have to do? Grab some clothes from one of the lockers in the changing rooms?"));
                 list.Add(Program.Transfer.Text(EventApi.HeroineName, "No, that's too slow. Now that my power is restored, I have a much faster way of doing it."));
-                list.Add(Program.Transfer.Text(EventApi.HeroineName, "Go up to a girl, like when stealing her panties, except this time imagine stealing everything."));
+                list.Add(Program.Transfer.Text(EventApi.HeroineName, "Go up to a girl, just like when stealing panties, except this time imagine stealing everything."));
 
                 list.Add(Program.Transfer.Text(EventApi.PlayerName, "Everything?! Are you serious?"));
                 list.Add(Program.Transfer.Text(EventApi.HeroineName, "Of course, consider it a reward for helping me out. Don't worry about getting caught, my blessing got much stronger. She won't even notice."));
@@ -745,7 +749,7 @@ namespace KK_PantyFairy.Events
             list.Add(Program.Transfer.Close());
 
             PantyFairyPlugin.Instance.StartCoroutine(
-                EventApi.StartAdvEvent(list, _mainEventPosition, Quaternion.identity, extraData: new Program.OpenDataProc
+                EventApi.StartAdvEvent(list, _mainEventPosition, _mainEventRotation, extraData: new Program.OpenDataProc
                 {
                     onLoad = () =>
                     {
@@ -771,8 +775,8 @@ namespace KK_PantyFairy.Events
 
             if (SaveData.UniformsStolenTotal < 1)
             {
-                list.Add(Program.Transfer.Text(EventApi.HeroineName, "You're finally here! Do you have the uniform?"));
-                list.Add(Program.Transfer.Text(EventApi.PlayerName, "Sorry, I didn't find any uniforms for you yet."));
+                list.Add(Program.Transfer.Text(EventApi.HeroineName, "You're finally here! Do you have the clothes?"));
+                list.Add(Program.Transfer.Text(EventApi.PlayerName, "Sorry, I didn't find any clothes for you yet."));
                 list.Add(Program.Transfer.Voice("0", "sound/data/pcm/c22/adm/00.unity3d", "adm_03_22_003"));
                 list.Add(Program.Transfer.Text(EventApi.HeroineName, "Then hurry up and get one, I can't wait to return to my body!"));
                 list.Add(Program.Transfer.Text(EventApi.PlayerName, "I can't wait either!"));
@@ -790,9 +794,9 @@ namespace KK_PantyFairy.Events
                 }
                 else
                 {
-                    list.Add(Program.Transfer.Text(EventApi.PlayerName, "I have the uniform, here you go!"));
+                    list.Add(Program.Transfer.Text(EventApi.PlayerName, "I have the clothes, here you go!"));
                     list.Add(Program.Transfer.Text(EventApi.HeroineName, "Finally! Thank you!"));
-                    list.Add(Program.Transfer.Text(EventApi.Narrator, "I hold the uniform up and it disappears in a ball of light."));
+                    list.Add(Program.Transfer.Text(EventApi.Narrator, "I hold the clothes up and they disappear in a ball of light."));
                     AddFlashOfLight(list);
                     list.Add(Program.Transfer.Text(EventApi.HeroineName, "Hmm... I'll have to make some adjustments but it should work. Give me a minute."));
                     list.Add(Program.Transfer.Text(EventApi.PlayerName, "Alright, I can wait."));
@@ -829,7 +833,7 @@ namespace KK_PantyFairy.Events
                     list.Add(Program.Transfer.Text(EventApi.PlayerName, "So we're starting as friends, this works for me. What will you do now?"));
                     list.Add(Program.Transfer.Create(true, Command.CharaMotion, "0", "Stand_07_00"));
                     list.Add(Program.Transfer.Create(true, Command.CharaExpression, "0", "", "", "7", "", "", "", "", "", "", "", ""));
-                    list.Add(Program.Transfer.Text(EventApi.HeroineName, "Hmm... I think I'll take a stroll outside around the island, see what changed in the village."));
+                    list.Add(Program.Transfer.Text(EventApi.HeroineName, "Hmm... I think I'll just take a stroll outside. Walk around the island, see what changed in the village."));
                     list.Add(Program.Transfer.Text(EventApi.PlayerName, "Alright, stay safe out there. See you later!"));
                     list.Add(Program.Transfer.Create(true, Command.CharaActive, "0", "false"));
                     list.Add(Program.Transfer.Text(EventApi.Narrator, "She walked to the door and waved to me before leaving the store."));
@@ -854,7 +858,7 @@ namespace KK_PantyFairy.Events
             list.Add(Program.Transfer.Close());
 
             PantyFairyPlugin.Instance.StartCoroutine(
-                EventApi.StartAdvEvent(list, _mainEventPosition, Quaternion.identity, extraData: new Program.OpenDataProc
+                EventApi.StartAdvEvent(list, _mainEventPosition, _mainEventRotation, extraData: new Program.OpenDataProc
                 {
                     onLoad = () =>
                     {
@@ -862,9 +866,13 @@ namespace KK_PantyFairy.Events
                         {
                             icon.Dispose();
                             Progress = StoryProgress.Complete;
-                            Game.saveData.player.koikatsuPoint += 50;
                         }
                     }
+                }).AppendCo(() =>
+                {
+                    // Need to do this after to have the gained points counter appear
+                    if (progress)
+                        Game.saveData.player.koikatsuPoint += 50;
                 }));
         }
 
@@ -873,7 +881,7 @@ namespace KK_PantyFairy.Events
             var card = ResourceUtils.GetEmbeddedResource("fairy_card.png", typeof(PantyFairyPlugin).Assembly);
             if (card == null) throw new ArgumentNullException(nameof(card));
             var cfc = new ChaFileControl();
-            cfc.LoadFromBytes(card, true, true);
+            cfc.LoadFromBytes(card, false, true);
             var h = new SaveData.Heroine(cfc, false);
             return h;
         }

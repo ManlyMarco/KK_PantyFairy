@@ -117,10 +117,14 @@ namespace KK_PantyFairy.Functions
                 yield return new WaitForSeconds(0.4f);
             }
 
-            heroine.lewdness = Mathf.Min(100, heroine.lewdness + (PantyStealFeat.IsDepantified(heroine.chaCtrl) ? 40 : 20));
+            heroine.lewdness = Mathf.Min(100, heroine.lewdness + (PantyStealFeat.IsDepantified(heroine.chaCtrl) ? 30 : 10));
 
             // Restore original forces
             ApplyForce(Vector3.zero);
+            
+            var list2 = EventApi.CreateNewEvent();
+            list2.Add(Program.Transfer.Close());
+            yield return EventApi.StartTextSceneEvent(talkScene, list2, true);
         }
     }
 }

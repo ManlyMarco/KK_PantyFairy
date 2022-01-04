@@ -9,5 +9,11 @@
     <Import_RootNamespace>Shared_PantyFairy</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\CustomEventData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\PantyFairyGameController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\PantyFairySaveData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\StoryProgress.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PantyFairyPlugin.cs" />
   </ItemGroup>
 </Project>

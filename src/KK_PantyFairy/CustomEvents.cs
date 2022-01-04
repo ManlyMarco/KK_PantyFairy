@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ADV;
 using KK_PantyFairy.Data;
+using KK_PantyFairy.Events;
 using KK_PantyFairy.Functions;
 using KKAPI.MainGame;
 using KKAPI.Utilities;
@@ -11,7 +12,7 @@ using UniRx;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace KK_PantyFairy.Events
+namespace KK_PantyFairy
 {
     public static class CustomEvents
     {
