@@ -26,7 +26,7 @@ namespace KK_PantyFairy.Data
 
         protected override void OnNewGame()
         {
-            CustomEvents.SaveData = new PantyFairySaveData();
+            CustomEvents.SaveData = new PantyFairySaveData() { Progress = StoryProgress.E1_Initial };
         }
     }
 }
