@@ -1,20 +1,22 @@
-# KK_PantyFairy
-Plugin that adds a custom side quest and some new gameplay features to Koikatsu story mode. The side quest consists of multiple events with different tasks to do. New touch icons are added when talking to heroines in the top right corner as you progress the side quest.
+# PantyFairy
+Plugin that adds a custom side quest and some new gameplay features to Koikatu and Koikatsu Sunshine story mode. The side quest consists of multiple events with different tasks to do. New touch icons are added when talking to heroines in the top right corner as you progress the side quest.
 
 This plugin is inspired by the KK_PantyRobber plugin by picolet21. He laid the groundwork for custom ADV scenes and made this plugin possible, so big kudos to him.
 
 ## How to use 
-1. Make sure that you have at least [BepInEx 5.4.4](https://github.com/BepInEx/BepInEx/releases) and [Modding API 1.18](https://github.com/ManlyMarco/KKAPI) installed.
+1. Make sure that you have latest [BepInEx 5.x](https://github.com/BepInEx/BepInEx/releases) and [Modding API](https://github.com/ManlyMarco/KKAPI) installed.
 2. Download the latest release for your game from [here](https://github.com/ManlyMarco/KK_PantyFairy/releases/latest).
 3. If you have KK_PantyRobber.dll in your plugins, remove it to avoid potential compatibility issues.
 4. Extract the release to your game directory. The dll file should end up inside BepInEx\plugins folder in your game's directory.
-5. Start main game, either by loading an old save or starting a new game. You should see a new action icon at 1F Corridor near the Infarmary door.
+5. Start main game, either by loading an old save or starting a new game. You should see a new action icon at:
+     - 1F Corridor near the Infirmary door (KK)
+     - Trash bins near the Training Center (KKS)
 
 ## Screenshots
 
 ![preview](https://user-images.githubusercontent.com/39247311/115811520-239e7d80-a3f0-11eb-9427-96cc5c132fd5.png)
 
-## Cheats / walkthrough / spoilers
+## Cheats / walkthrough / spoilers (KK)
 - There are some cheats you can turn on in Plugin Settings by searching for "pantyfairy" (press F1).
 
 - To start the side quest, look on the floor of 1F Walkway around Infarmary and Library doors. After this, further events will spawn in Men's Bathroom.
