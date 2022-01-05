@@ -87,11 +87,16 @@ namespace KK_PantyFairy.Functions
             }
 
             var bones = heroine.chaCtrl.GetComponentsInChildren<DynamicBone>();
+            var bones1 = heroine.chaCtrl.GetComponentsInChildren<DynamicBone_Ver01>();
+            var bones2 = heroine.chaCtrl.GetComponentsInChildren<DynamicBone_Ver02>();
             var origForces = bones.Select(x => x.m_Force).ToArray();
+            var origForces1 = bones1.Select(x => x.m_Force).ToArray();
+            var origForces2 = bones2.Select(x => x.Force).ToArray();
             void ApplyForce(Vector3 vector3)
             {
-                for (var i = 0; i < bones.Length; i++)
-                    bones[i].m_Force = origForces[i] + vector3;
+                for (var i = 0; i < bones.Length; i++) bones[i].m_Force = origForces[i] + vector3;
+                for (var i = 0; i < bones1.Length; i++) bones1[i].m_Force = origForces1[i] + vector3;
+                for (var i = 0; i < bones2.Length; i++) bones2[i].Force = origForces2[i] + vector3;
             }
 
             var notCares = PantyStealFeat.GetStealProbability(heroine, false) > Random.Range(0.2f, 0.6f);
@@ -105,7 +110,7 @@ namespace KK_PantyFairy.Functions
             while (endTime > Time.time)
             {
                 // skirt flips fully at 0.005f Y
-                var extraForce = new Vector3(0, Random.Range(0.003f, 0.008f), 0);
+                var extraForce = new Vector3(0, Random.Range(0.003f, 0.012f), 0);
                 ApplyForce(extraForce);
 
                 if (!noticed && noticeTime < Time.time)
@@ -121,10 +126,6 @@ namespace KK_PantyFairy.Functions
 
             // Restore original forces
             ApplyForce(Vector3.zero);
-            
-            var list2 = EventApi.CreateNewEvent();
-            list2.Add(Program.Transfer.Close());
-            yield return EventApi.StartTextSceneEvent(talkScene, list2, true);
         }
     }
 }
