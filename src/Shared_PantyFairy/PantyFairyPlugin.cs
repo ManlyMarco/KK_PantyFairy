@@ -9,6 +9,6 @@ namespace KK_PantyFairy
     {
         public const string GUID = "PantyFairy";
         public const string PluginName = "PantyFairy";
-        public const string Version = "1.0.1";
+        public const string Version = "1.0.2";
     }
 }
